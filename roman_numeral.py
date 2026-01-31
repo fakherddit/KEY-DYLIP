@@ -19,7 +19,9 @@ def roman_to_int(roman):
     prev_value = 0
     
     for char in reversed(roman):
-        value = roman_values.get(char, 0)
+        if char not in roman_values:
+            raise ValueError(f"Invalid Roman numeral character: {char}")
+        value = roman_values[char]
         if value < prev_value:
             total -= value
         else:
@@ -30,6 +32,9 @@ def roman_to_int(roman):
 
 def int_to_roman(num):
     """Convert integer to Roman numeral"""
+    if not isinstance(num, int) or num < 1 or num > 3999:
+        raise ValueError("Number must be an integer between 1 and 3999")
+    
     values = [
         (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
         (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
